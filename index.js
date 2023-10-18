@@ -42,6 +42,7 @@ async function run() {
 
         const database = client.db("brandDB");
         const BrandNamesCollection = database.collection("brandNames");
+        const ProductCollection = database.collection("products");
 
         // Create Custome APIs To Req & Res
         // BrandNames Input
@@ -67,7 +68,11 @@ async function run() {
         })
 
         // POST: CREATE
-        // app.post('/')
+        app.post('/addProducts', async (req, res) => {
+            const result = await ProductCollection.insertOne(req.body);
+            console.log(`A document was inserted with the _id: ${result.insertedId}`);
+            res.send(result);
+        })
     } finally {
         // Ensures that the client will close when you finish/error
         // await client.close();
@@ -77,7 +82,7 @@ run().catch(console.dir);
 
 
 app.get("/", (req, res) => {
-    res.send("Server is Running. Update: Start, env, user, pass, brandNames");
+    res.send("Server is Running. Update: Start, env, user, pass, brandNames, Vercel");
 });
 
 app.listen(port, () => {
