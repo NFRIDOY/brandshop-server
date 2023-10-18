@@ -40,7 +40,19 @@ async function run() {
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
+        const database = client.db("brandDB");
+        const BrandNamesCollection = database.collection("brandNames");
+
         // Create Custome APIs To Req & Res
+        // BrandNames Input
+        const brandNames = [
+            {brandId: 1, brandName: "Apple",  brandImage: "https://images.unsplash.com/photo-1621768216002-5ac171876625?auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=2074" },
+            {brandId: 2, brandName: "Google",  brandImage: "https://images.unsplash.com/photo-1529612700005-e35377bf1415?auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=2070" },
+            {brandId: 3, brandName: "Microsoft",  brandImage: "https://images.unsplash.com/photo-1662947036644-ecfde1221ac7?auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=1856" },
+            {brandId: 4, brandName: "Huawei",  brandImage: "https://images.unsplash.com/photo-1681928411570-09b1bab3a6ac?auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=2060" },
+            {brandId: 5, brandName: "Xiaomi",  brandImage: "https://images.unsplash.com/photo-1662948100180-7bc43f6fcab3?auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=1856" },
+            {brandId: 6, brandName: "Samsung",  brandImage: "https://images.unsplash.com/photo-1661347998423-b15d37d6f61e?auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&w=2070" }
+        ];
 
         // POST: CREATE
         // app.post('/')
