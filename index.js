@@ -77,8 +77,8 @@ async function run() {
             // const cursor = userCollection.find(query, options);
             const cursor = ProductCollection.find(query);
             const results = await cursor.toArray()
-            console.log(results)
             res.send(results);
+            // console.log(results)
         })
         // // Only Apple
         // app.get('/products/Apple', async (req, res) => {
