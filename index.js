@@ -67,6 +67,31 @@ async function run() {
             res.send(results);
         })
 
+        // GET: Pruducts By Brands
+
+
+        // Find By Brand Name
+        app.get('/products/:brandName', async (req, res) => {
+            const theBrandName = req.params.brandName
+            const query = { brandName: theBrandName };
+            // const cursor = userCollection.find(query, options);
+            const cursor = ProductCollection.find(query);
+            const results = await cursor.toArray()
+            console.log(results)
+            res.send(results);
+            // res.send("HI");
+        })
+        // // Only Apple
+        // app.get('/products/Apple', async (req, res) => {
+        //     const query = { brandName: "Apple" };
+        //     // const cursor = userCollection.find(query, options);
+        //     const cursor = ProductCollection.find(query);
+        //     const results = await cursor.toArray()
+        //     console.log(results)
+        //     res.send(results);
+        //     // res.send("HI");
+        // })
+
         // POST: CREATE
         app.post('/addProducts', async (req, res) => {
             const result = await ProductCollection.insertOne(req.body);
