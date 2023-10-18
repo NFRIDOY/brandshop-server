@@ -79,7 +79,6 @@ async function run() {
             const results = await cursor.toArray()
             console.log(results)
             res.send(results);
-            // res.send("HI");
         })
         // // Only Apple
         // app.get('/products/Apple', async (req, res) => {
