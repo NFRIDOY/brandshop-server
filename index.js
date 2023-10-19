@@ -5,7 +5,7 @@ const express = require("express");
 const cors = require("cors");
 require('dotenv').config()
 // console.log(process.env) // remove this after you've confirmed it is working
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -96,6 +96,48 @@ async function run() {
             const result = await ProductCollection.insertOne(req.body);
             console.log(`A document was inserted with the _id: ${result.insertedId}`);
             res.send(result);
+        })
+
+        // GET: Read Berfore Update
+        app.get('/updateProducts/:updateId', async (req, res) => {
+            const id = req.params.updateId
+            console.log(id)
+            const query = { _id: new ObjectId(id) };
+            // const query = { brandName: theBrandName };
+
+            const cursor = ProductCollection.findOne(query);
+            const results = await cursor
+            res.send(results);
+
+        })
+
+        // PUT: product Update
+        app.put('/updateProducts/:updateId', async (req, res) => {
+            const id = req.params.updateId
+            console.log(id)
+            const filter = { _id: new ObjectId(id) };
+            /* Set the upsert option to insert a document if no documents match
+            the filter */
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    // plot: `A harvest of random numbers, such as: ${Math.random()}`
+                    image: req.body.image,
+                    name: req.body.name,
+                    brandName: req.body.brandName,
+                    type: req.body.type,
+                    price: req.body.price,
+                    shortDescription: req.body.shortDescription,
+                    rating: req.body.rating
+                },
+            };
+
+            const result = await ProductCollection.updateOne(filter, updateDoc, options);
+            res.send(result)
+            console.log(
+                `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+            );
+
         })
     } finally {
         // Ensures that the client will close when you finish/error
