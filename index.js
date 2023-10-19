@@ -98,10 +98,22 @@ async function run() {
             res.send(result);
         })
 
+        // GET: Read details Product
+        app.get('/detailsProducts/:detailsProductId', async (req, res) => {
+            const id = req.params.detailsProductId
+            console.log(id)
+            const query = { _id: new ObjectId(id) };
+            // const query = { brandName: theBrandName };
+
+            const cursor = ProductCollection.findOne(query);
+            const results = await cursor
+            res.send(results);
+
+        })
         // GET: Read Berfore Update
         app.get('/updateProducts/:updateId', async (req, res) => {
             const id = req.params.updateId
-            console.log(id)
+            // console.log(id)
             const query = { _id: new ObjectId(id) };
             // const query = { brandName: theBrandName };
 
