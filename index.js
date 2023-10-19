@@ -153,11 +153,30 @@ async function run() {
         })
 
         // Post: add To Carts
-        app.post('/addToCarts', async (req, res) => {
+        app.post('/myCart', async (req, res) => {
             console.log(req.body)
             const result = await ProductsCartCollection.insertOne(req.body);
             console.log(`A document was inserted with the _id: ${result.insertedId}`);
             res.send(result)
+        })
+        // Get: Read To Carts
+        app.get('/myCart', async (req, res) => {
+            const cursor = ProductsCartCollection.find();
+            const results = await cursor.toArray()
+            res.send(results);
+            console.log(results)
+        })
+        // Delete: From Card
+        app.delete('/myCart/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await ProductsCartCollection.deleteOne(query);
+            res.send(result)
+            if (result.deletedCount === 1) {
+                console.log("Successfully deleted one document.");
+            } else {
+                console.log("No documents matched the query. Deleted 0 documents.");
+            }
         })
     } finally {
         // Ensures that the client will close when you finish/error
