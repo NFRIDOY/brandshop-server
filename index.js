@@ -43,6 +43,7 @@ async function run() {
         const database = client.db("brandDB");
         const BrandNamesCollection = database.collection("brandNames");
         const ProductCollection = database.collection("products");
+        const ProductsCartCollection = database.collection("productsCart");
 
         // Create Custome APIs To Req & Res
         // BrandNames Input
@@ -149,7 +150,14 @@ async function run() {
             console.log(
                 `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
             );
+        })
 
+        // Post: add To Carts
+        app.post('/addToCarts', async (req, res) => {
+            console.log(req.body)
+            const result = await ProductsCartCollection.insertOne(req.body);
+            console.log(`A document was inserted with the _id: ${result.insertedId}`);
+            res.send(result)
         })
     } finally {
         // Ensures that the client will close when you finish/error
