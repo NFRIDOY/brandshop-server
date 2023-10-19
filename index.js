@@ -164,7 +164,7 @@ async function run() {
             const cursor = ProductsCartCollection.find();
             const results = await cursor.toArray()
             res.send(results);
-            console.log(results)
+            // console.log(results)
         })
         // Delete: From Card
         app.delete('/myCart/:id', async (req, res) => {
